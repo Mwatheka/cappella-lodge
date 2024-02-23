@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Gallery Carousel with Modal</title>
+<style>
+  /* Gallery */
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .gallery-item {
+    flex: 1 0 20%; /* Adjust as needed */
+    margin: 10px;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .close {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    cursor: pointer;
+  }
+
+  /* Scroll Buttons */
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+  .prev {
+    left: 0;
+  }
+
+  .next {
+    right: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Gallery -->
+<div class="gallery">
+    <div class="gallery-item col-md-2">
+      <img src="419357349.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item col-md-2">
+      <img src="419357607.jpg" alt="Image 2">
+    </div>
+  <!-- Add more gallery items here -->
+</div>
+
+<!-- Modal window -->
+<div id="modal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modal-img">
+</div>
+
+<!-- Scroll buttons -->
+<div class="scroll-button prev" onclick="plusSlides(-1)">❮</div>
+<div class="scroll-button next" onclick="plusSlides(1)">❯</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("modal");
+
+// Get the image and insert it inside the modal
+var img = document.getElementsByClassName("gallery-item");
+var modalImg = document.getElementById("modal-img");
+
+for (var i = 0; i < img.length; i++) {
+  img[i].onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.getElementsByTagName('img')[0].src;
+  }
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// Carousel functionality
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("gallery-item");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+</script>
+
+</body>
+</html>
